@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<style>
+  body{margin:0;padding:0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+  .wrap{max-width:600px;margin:32px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+  .header{background:#1A2B4A;padding:32px 36px;text-align:center}
+  .header h1{color:#fff;margin:0;font-size:24px;font-weight:700;letter-spacing:-.5px}
+  .header h1 span{color:#2563EB}
+  .header p{color:rgba(255,255,255,.6);margin:4px 0 0;font-size:13px}
+  .body{padding:36px}
+  .greeting{font-size:18px;font-weight:600;color:#0F172A;margin-bottom:8px}
+  .message{font-size:14px;color:#475569;line-height:1.7;margin-bottom:24px}
+  .status-badge{display:inline-block;padding:8px 24px;border-radius:24px;font-size:15px;font-weight:700;letter-spacing:.3px}
+  .status-wrap{text-align:center;margin:24px 0;padding:20px;background:#F8FAFC;border-radius:8px}
+  .status-label{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:#94A3B8;margin-bottom:8px}
+  .details{background:#F8FAFC;border-radius:8px;padding:16px 20px;margin-bottom:24px}
+  .detail-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #E2E8F0;font-size:13px}
+  .detail-row:last-child{border-bottom:none}
+  .detail-label{color:#64748B}
+  .detail-val{color:#0F172A;font-weight:600}
+  .tips{background:#EFF6FF;border-radius:8px;padding:16px 20px;margin-bottom:24px}
+  .tips h3{color:#2563EB;font-size:13px;margin:0 0 8px}
+  .tips ul{margin:0;padding-left:16px;color:#475569;font-size:13px;line-height:1.8}
+  .btn{display:block;width:fit-content;margin:0 auto 24px;padding:12px 32px;background:#2563EB;
+       color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:14px}
+  .footer{background:#F8FAFC;padding:20px 36px;text-align:center;border-top:1px solid #E2E8F0}
+  .footer p{font-size:12px;color:#94A3B8;margin:4px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h1>Resume<span>IQ</span></h1>
+    <p>AI-Powered Recruitment Platform</p>
+  </div>
+  <div class="body">
+    <div class="greeting">Hello, <span th:text="${candidateName}">Candidate</span>!</div>
+    <div class="message">
+      We have an update regarding your application for the position of
+      <strong th:text="${jobTitle}">Job Title</strong>. Your application status has been updated.
+    </div>
+
+    <div class="status-wrap">
+      <div class="status-label">Application Status</div>
+      <span class="status-badge"
+            th:style="'background:' + ${statusColor} + ';color:' + ${statusTextColor}"
+            th:text="${statusLabel}">SELECTED</span>
+    </div>
+
+    <div class="details">
+      <div class="detail-row">
+        <span class="detail-label">Position</span>
+        <span class="detail-val" th:text="${jobTitle}">Job Title</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Match Score</span>
+        <span class="detail-val" th:text="${matchScore + '%'}">85%</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">ATS Score</span>
+        <span class="detail-val" th:text="${atsScore + '%'}">78%</span>
+      </div>
+      <div class="detail-row" th:if="${notes != null and !#strings.isEmpty(notes)}">
+        <span class="detail-label">Recruiter Note</span>
+        <span class="detail-val" th:text="${notes}">Note</span>
+      </div>
+    </div>
+
+    <div class="tips" th:if="${tips != null and !#lists.isEmpty(tips)}">
+      <h3>💡 AI-Generated Tips for You</h3>
+      <ul>
+        <li th:each="tip : ${tips}" th:text="${tip}">Tip</li>
+      </ul>
+    </div>
+
+    <div class="message" th:text="${statusMessage}">Status message here.</div>
+  </div>
+  <div class="footer">
+    <p>This email was sent by ResumeIQ · AI Recruitment Platform</p>
+    <p>© 2026 ResumeIQ. All rights reserved.</p>
+  </div>
+</div>
+</body>
+</html>

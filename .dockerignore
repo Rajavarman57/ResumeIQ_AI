@@ -1,0 +1,9 @@
+backend/target/
+backend/.mvn/
+**/*.class
+**/*.jar
+**/node_modules/
+uploads/
+*.log
+.git/
+.env

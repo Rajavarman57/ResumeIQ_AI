@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<style>
+  body{margin:0;padding:0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+  .wrap{max-width:600px;margin:32px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+  .header{background:linear-gradient(135deg,#1A2B4A,#2563EB);padding:32px 36px;text-align:center}
+  .header h1{color:#fff;margin:0;font-size:24px;font-weight:700}
+  .header h1 span{color:#93C5FD}
+  .header p{color:rgba(255,255,255,.65);margin:4px 0 0;font-size:13px}
+  .body{padding:36px}
+  .ai-badge{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:14px 18px;
+            margin-bottom:24px;display:flex;align-items:center;gap:12px}
+  .ai-badge .icon{font-size:24px}
+  .ai-badge p{margin:0;font-size:13px;color:#1D4ED8;line-height:1.5}
+  .score-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+  .score-card{background:#F8FAFC;border-radius:8px;padding:16px;text-align:center}
+  .score-val{font-size:28px;font-weight:700}
+  .score-label{font-size:11px;color:#94A3B8;margin-top:2px}
+  .skills-wrap{margin-bottom:24px}
+  .skills-wrap h3{font-size:13px;color:#475569;margin:0 0 10px;text-transform:uppercase;letter-spacing:.5px}
+  .skill-tag{display:inline-block;padding:3px 10px;background:#DBEAFE;color:#1E40AF;
+             border-radius:20px;font-size:11px;font-weight:500;margin:3px}
+  .gap-tag{background:#FEE2E2;color:#B91C1C}
+  .suggestions{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:16px 20px;margin-bottom:24px}
+  .suggestions h3{color:#92400E;font-size:13px;margin:0 0 8px}
+  .suggestions ul{margin:0;padding-left:16px;color:#78350F;font-size:13px;line-height:1.8}
+  .footer{background:#F8FAFC;padding:20px 36px;text-align:center;border-top:1px solid #E2E8F0}
+  .footer p{font-size:12px;color:#94A3B8;margin:4px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h1>Resume<span>IQ</span></h1>
+    <p>Your resume has been analysed by AI</p>
+  </div>
+  <div class="body">
+    <p style="font-size:16px;font-weight:600;color:#0F172A;margin-bottom:6px">
+      Hello, <span th:text="${candidateName}">Candidate</span>!
+    </p>
+    <p style="font-size:14px;color:#475569;line-height:1.7;margin-bottom:20px">
+      Your resume has been successfully uploaded and analysed by our Claude AI system
+      for the position of <strong th:text="${jobTitle}">Job Title</strong>.
+    </p>
+
+    <div class="ai-badge">
+      <div class="icon">🤖</div>
+      <p>Claude AI has evaluated your resume and generated a detailed score report below.</p>
+    </div>
+
+    <div class="score-grid">
+      <div class="score-card">
+        <div class="score-val" th:style="'color:' + ${matchColor}" th:text="${matchScore + '%'}">85%</div>
+        <div class="score-label">AI Match Score</div>
+      </div>
+      <div class="score-card">
+        <div class="score-val" style="color:#7C3AED" th:text="${atsScore + '%'}">78%</div>
+        <div class="score-label">ATS Score</div>
+      </div>
+    </div>
+
+    <div class="skills-wrap" th:if="${matchedSkills != null and !#lists.isEmpty(matchedSkills)}">
+      <h3>✓ Skills You Have</h3>
+      <div>
+        <span class="skill-tag" th:each="skill : ${matchedSkills}" th:text="${skill}">skill</span>
+      </div>
+    </div>
+
+    <div class="skills-wrap" th:if="${missingSkills != null and !#lists.isEmpty(missingSkills)}">
+      <h3>✗ Skills to Develop</h3>
+      <div>
+        <span class="skill-tag gap-tag" th:each="skill : ${missingSkills}" th:text="${skill}">skill</span>
+      </div>
+    </div>
+
+    <div class="suggestions" th:if="${suggestions != null and !#lists.isEmpty(suggestions)}">
+      <h3>💡 AI Resume Improvement Tips</h3>
+      <ul>
+        <li th:each="s : ${suggestions}" th:text="${s}">suggestion</li>
+      </ul>
+    </div>
+
+    <p style="font-size:13px;color:#64748B">
+      A recruiter will review your application and update your status. You will receive
+      another email when your status changes.
+    </p>
+  </div>
+  <div class="footer">
+    <p>This email was sent by ResumeIQ · AI Recruitment Platform</p>
+    <p>© 2026 ResumeIQ. All rights reserved.</p>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+# Java / Maven
+backend/target/
+backend/.mvn/
+*.class
+*.jar
+*.war
+!backend/target/resumeiq-backend-1.0.0.jar
+
+# IntelliJ / Eclipse
+.idea/
+*.iml
+.eclipse/
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode/
+
+# Environment files (NEVER commit secrets)
+.env
+*.env.local
+
+# Uploads
+uploads/
+backend/uploads/
+backend/data/
+
+# Node
+node_modules/
+npm-debug.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Docker
+docker-compose.override.yml
