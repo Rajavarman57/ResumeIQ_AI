@@ -260,7 +260,7 @@ const SubmitPage = {
             <p>
               Thank you, <strong>${res.candidateName || 'Candidate'}</strong>. 
               Your application for <strong>${res.jobTitle || 'the position'}</strong> has been successfully received. 
-              Our Claude AI pipeline has processed and scored your profile. Our recruitment team will review the results shortly.
+              Our Gemini AI pipeline has processed and scored your profile. Our recruitment team will review the results shortly.
             </p>
             <button class="btn btn-primary" style="margin: 0 auto;" onclick="window.location.reload()">
               <i class="fa-solid fa-rotate-left"></i> Submit Another Application

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ChatService {
 
-    private final ClaudeAIService claude;
+    private final GeminiAIService gemini;
     private final ChatMessageRepository chatRepo;
     private final ResumeRepository resumeRepo;
     private final CandidateScoreRepository scoreRepo;
@@ -57,8 +57,8 @@ public class ChatService {
             Be specific, helpful, and professional. Keep response under 200 words unless detail is needed.
             """.formatted(context, conversationHistory.isEmpty() ? "(New conversation)" : conversationHistory, userMessage);
 
-        // Call Claude
-        String aiResponse = claude.ask(SYSTEM_CHAT, fullPrompt);
+        // Call Gemini
+        String aiResponse = gemini.ask(SYSTEM_CHAT, fullPrompt);
         if (aiResponse == null) aiResponse = "I'm sorry, I'm unable to process your request right now. Please try again.";
 
         // Persist both messages

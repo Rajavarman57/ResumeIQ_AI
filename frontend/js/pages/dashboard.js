@@ -59,7 +59,7 @@ Router.register('dashboard', async (app) => {
 
   const user = Auth.user() || {};
   const isRecruiter = user.role === 'RECRUITER';
-  const bannerTitle = isRecruiter ? 'Claude AI Recruiter Portal' : 'Claude AI is active';
+  const bannerTitle = isRecruiter ? 'Gemini AI Recruiter Portal' : 'Gemini AI is active';
   const bannerSub = isRecruiter ? 'Evaluating resumes and tracking applicants for your assigned job roles' : 'Resumes are parsed, scored, and ranked using real-time AI analysis';
 
   const content = `

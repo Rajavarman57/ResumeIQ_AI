@@ -85,7 +85,7 @@ const ChatPage = {
           </button>
         </div>
         <div style="font-size:11px;color:var(--gray-400);margin-top:6px;text-align:center">
-          <i class="fa-solid fa-brain" style="color:var(--purple)"></i> Powered by Claude AI · Press Enter to send
+          <i class="fa-solid fa-brain" style="color:var(--purple)"></i> Powered by Gemini AI · Press Enter to send
         </div>
       </div>`;
 
@@ -145,7 +145,7 @@ const ChatPage = {
         <div style="width:22px;height:22px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center">
           <i class="fa-solid fa-brain" style="font-size:10px;color:#93C5FD"></i>
         </div>
-        <span style="font-size:11px;font-weight:600;color:var(--gray-500)">Claude AI</span>
+        <span style="font-size:11px;font-weight:600;color:var(--gray-500)">Gemini AI</span>
       </div>
       <div class="chat-bubble-ai">${this.formatAI(content)}</div>
       <div class="chat-time">${timeStr}</div>

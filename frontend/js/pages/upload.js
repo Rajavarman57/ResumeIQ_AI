@@ -7,10 +7,10 @@ Router.register('upload', async (app) => {
       <div class="card" style="margin-bottom:20px">
         <div class="card-header">
           <div class="card-title"><i class="fa-solid fa-brain" style="color:var(--blue)"></i> AI Resume Upload & Analysis</div>
-          <span class="badge badge-purple"><i class="fa-solid fa-sparkles"></i> Powered by Claude AI</span>
+          <span class="badge badge-purple"><i class="fa-solid fa-sparkles"></i> Powered by Gemini AI</span>
         </div>
         <div style="background:var(--blue-l);border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--blue)">
-          <i class="fa-solid fa-circle-info"></i> Claude AI will extract your candidate's profile, score them against job requirements, identify skill gaps, and generate personalised improvement suggestions.
+          <i class="fa-solid fa-circle-info"></i> Gemini AI will extract your candidate's profile, score them against job requirements, identify skill gaps, and generate personalised improvement suggestions.
         </div>
         <div id="upload-alert"></div>
         <div class="form-group">
@@ -25,7 +25,7 @@ Router.register('upload', async (app) => {
           <input type="file" id="file-input" accept=".pdf,.docx" style="display:none" onchange="UploadPage.handleFile(this.files[0])"/>
           <i class="fa-solid fa-file-arrow-up"></i>
           <h3>Drop resume here or click to browse</h3>
-          <p>Supports PDF and DOCX · Max 50MB · Claude AI will parse and score</p>
+          <p>Supports PDF and DOCX · Max 50MB · Gemini AI will parse and score</p>
         </div>
         <div id="file-preview" style="display:none;margin-top:16px">
           <div style="display:flex;align-items:center;gap:14px;padding:14px;background:var(--gray-50);border-radius:var(--radius);border:1px solid var(--gray-200)">
@@ -39,7 +39,7 @@ Router.register('upload', async (app) => {
         </div>
         <div style="margin-top:18px;display:flex;justify-content:flex-end">
           <button class="btn btn-primary" id="upload-btn" onclick="UploadPage.submit()" disabled>
-            <i class="fa-solid fa-brain"></i> Analyse with Claude AI
+            <i class="fa-solid fa-brain"></i> Analyse with Gemini AI
           </button>
         </div>
       </div>
@@ -93,7 +93,7 @@ const UploadPage = {
   async submit() {
     if (!this.file) return;
     const btn = document.getElementById('upload-btn');
-    btn.innerHTML = '<div class="spinner"></div> Claude AI is analysing...';
+    btn.innerHTML = '<div class="spinner"></div> Gemini AI is analysing...';
     btn.disabled = true;
     document.getElementById('upload-result').style.display = 'none';
 
@@ -103,17 +103,17 @@ const UploadPage = {
     if (jobId) fd.append('jobId', jobId);
 
     const res = await api.upload('/resumes/upload', fd);
-    btn.innerHTML = '<i class="fa-solid fa-brain"></i> Analyse with Claude AI';
+    btn.innerHTML = '<i class="fa-solid fa-brain"></i> Analyse with Gemini AI';
     btn.disabled = false;
 
     if (!res || res.error) {
-      document.getElementById('upload-alert').innerHTML = C.alert(res?.error || 'Upload failed. Check that the backend is running and ANTHROPIC_API_KEY is set.', 'error');
+      document.getElementById('upload-alert').innerHTML = C.alert(res?.error || 'Upload failed. Check that the backend is running and GEMINI_API_KEY is set.', 'error');
       return;
     }
 
     this.showResult(res);
     this.clearFile();
-    C.showToast('Resume analysed by Claude AI!');
+    C.showToast('Resume analysed by Gemini AI!');
   },
 
   showResult(res) {
@@ -138,7 +138,7 @@ const UploadPage = {
     const resultHtml = `
       <div class="card" style="margin-bottom:16px">
         <div class="card-header">
-          <div class="card-title"><i class="fa-solid fa-circle-check" style="color:var(--green)"></i> Claude AI Analysis Complete</div>
+          <div class="card-title"><i class="fa-solid fa-circle-check" style="color:var(--green)"></i> Gemini AI Analysis Complete</div>
           <span class="badge badge-green">Scored against ${res.jobsScored || 0} role(s)</span>
         </div>
 

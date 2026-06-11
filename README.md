@@ -1,6 +1,6 @@
 # ResumeIQ — AI-Powered Recruitment Platform
 
-> Full-stack recruitment platform powered by **Claude AI**. Parses resumes, semantically scores candidates, generates personalised improvement suggestions, provides an AI chat interface per candidate, sends email notifications, and ships with full Docker support.
+> Full-stack recruitment platform powered by **Gemini AI**. Parses resumes, semantically scores candidates, generates personalised improvement suggestions, provides an AI chat interface per candidate, sends email notifications, and ships with full Docker support.
 
 ---
 
@@ -8,13 +8,13 @@
 
 | Feature | Description |
 |---|---|
-| 🤖 **AI Resume Parsing** | Claude extracts name, skills, experience, education, strengths |
+| 🤖 **AI Resume Parsing** | Gemini extracts name, skills, experience, education, strengths |
 | 📊 **AI Candidate Scoring** | Semantic match score + ATS score per job role |
 | 🔍 **Skill Gap Analysis** | Missing skills with priority and context |
 | 💡 **AI Suggestions** | Personalised resume improvements, summary rewrite, interview tips |
-| 💬 **Chat with Resume** | Ask Claude anything about a candidate in real-time |
+| 💬 **Chat with Resume** | Ask Gemini anything about a candidate in real-time |
 | 🔄 **Alternative Role Matching** | AI suggests other roles the candidate may suit |
-| 🧠 **AI JD Parsing** | Paste any job description — Claude extracts skills automatically |
+| 🧠 **AI JD Parsing** | Paste any job description — Gemini extracts skills automatically |
 | 📧 **Email Notifications** | Candidates receive styled HTML emails on status changes |
 | 📤 **CSV Export** | One-click hiring report download |
 | 🐳 **Docker Ready** | Full docker-compose with MySQL, backend, and frontend |
@@ -28,9 +28,9 @@
 |---|---|
 | Frontend | Vanilla JS, HTML5, CSS3 |
 | Backend | Java 17, Spring Boot 3.2, Spring Security, Spring Data JPA |
-| AI | Anthropic Claude API (`claude-opus-4-5`) |
+| AI | Google Gemini API (`gemini-1.5-flash`) |
 | Email | Spring Mail + Thymeleaf HTML templates |
-| Chat | REST API with persistent history (Claude AI) |
+| Chat | REST API with persistent history (Gemini AI) |
 | Database | H2 (dev) / MySQL 8 (prod/Docker) |
 | Resume Parsing | Apache PDFBox (PDF), Apache POI (DOCX) |
 | Auth | JWT (jjwt 0.11.5) |
@@ -50,8 +50,8 @@ git clone https://github.com/YOUR_USERNAME/resumeiq.git
 cd resumeiq
 
 # 2. Set your API key
-export ANTHROPIC_API_KEY=sk-ant-your-key-here    # Mac/Linux
-set ANTHROPIC_API_KEY=sk-ant-your-key-here        # Windows
+export GEMINI_API_KEY=your-gemini-key-here    # Mac/Linux
+set GEMINI_API_KEY=your-gemini-key-here        # Windows
 
 # 3. Start backend
 cd backend && mvn spring-boot:run
@@ -68,7 +68,7 @@ open http://localhost:5173
 ```bash
 # 1. Copy env file and fill in values
 cp .env.example .env
-# Edit .env — set ANTHROPIC_API_KEY at minimum
+# Edit .env — set GEMINI_API_KEY at minimum
 
 # 2. Build and start everything
 docker compose up --build
@@ -113,14 +113,14 @@ MAIL_FROM=noreply@resumeiq.local
 
 ## Chat with Resume
 
-Every candidate card has a **Chat** button. Click it to open an AI chat panel where you can ask Claude questions like:
+Every candidate card has a **Chat** button. Click it to open an AI chat panel where you can ask Gemini questions like:
 
 - *"Is this candidate a strong fit?"*
 - *"What are their top 3 strengths?"*
 - *"What interview questions should I ask?"*
 - *"Can you summarise their background in 3 sentences?"*
 
-Claude has read the resume, match scores, and skill gaps in full context.
+Gemini has read the resume, match scores, and skill gaps in full context.
 
 ---
 
@@ -130,7 +130,7 @@ Claude has read the resume, match scores, and skill gaps in full context.
 # Initialise and push
 git init
 git add .
-git commit -m "feat: initial ResumeIQ with Claude AI"
+git commit -m "feat: initial ResumeIQ with Gemini AI"
 git remote add origin https://github.com/YOUR_USERNAME/resumeiq.git
 git branch -M main
 git push -u origin main
@@ -142,7 +142,7 @@ Go to **Settings → Secrets and variables → Actions** and add:
 
 | Secret | Value |
 |---|---|
-| `ANTHROPIC_API_KEY` | Your Anthropic API key |
+| `GEMINI_API_KEY` | Your Google Gemini API key |
 | `DOCKER_USERNAME` | Your Docker Hub username |
 | `DOCKER_PASSWORD` | Your Docker Hub password or access token |
 
@@ -181,12 +181,12 @@ ResumeIQ/
 │       │   ├── CandidateStatus.java
 │       │   └── ChatMessage.java         ← Chat history
 │       ├── service/
-│       │   ├── ClaudeAIService.java         ← Raw Claude HTTP client
+│       │   ├── GeminiAIService.java         ← Raw Gemini HTTP client
 │       │   ├── AIResumeAnalysisService.java ← All AI prompts
 │       │   ├── MatchingService.java         ← Orchestrates AI scoring
 │       │   ├── ResumeParserService.java     ← PDFBox / POI
 │       │   ├── EmailService.java            ← Thymeleaf + SMTP
-│       │   └── ChatService.java             ← Claude chat sessions
+│       │   └── ChatService.java             ← Gemini chat sessions
 │       ├── security/ JwtUtil.java, JwtFilter.java
 │       └── resources/
 │           ├── application.properties

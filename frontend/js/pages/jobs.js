@@ -75,11 +75,11 @@ const JobsPage = {
     `));
   },
 
-  // AI-powered: paste a JD and Claude extracts skills automatically
+  // AI-powered: paste a JD and Gemini extracts skills automatically
   openAiParse() {
     document.body.insertAdjacentHTML('beforeend', C.modal('ai-parse-modal', '🤖 AI Parse Job Description', `
       <div style="background:var(--blue-l);border-radius:var(--radius);padding:10px;font-size:13px;color:var(--blue);margin-bottom:14px">
-        Paste a full job description — Claude AI will extract the title, required skills, experience level, and more.
+        Paste a full job description — Gemini AI will extract the title, required skills, experience level, and more.
       </div>
       <div class="form-group">
         <label class="form-label">Paste Job Description *</label>
@@ -90,7 +90,7 @@ const JobsPage = {
     `, `
       <button class="btn btn-secondary" onclick="C.closeModal('ai-parse-modal')">Cancel</button>
       <button class="btn btn-primary" id="ai-parse-btn" onclick="JobsPage.runAiParse()">
-        <i class="fa-solid fa-brain"></i> Parse with Claude AI
+        <i class="fa-solid fa-brain"></i> Parse with Gemini AI
       </button>
     `));
   },
@@ -99,11 +99,11 @@ const JobsPage = {
     const text = document.getElementById('ai-jd-text').value.trim();
     if (!text) { document.getElementById('ai-jd-alert').innerHTML = C.alert('Please paste a job description.','error'); return; }
     const btn = document.getElementById('ai-parse-btn');
-    btn.innerHTML = '<div class="spinner"></div> Claude is parsing...';
+    btn.innerHTML = '<div class="spinner"></div> Gemini is parsing...';
     btn.disabled = true;
 
     const res = await api.post('/jobs/ai-parse', { description: text });
-    btn.innerHTML = '<i class="fa-solid fa-brain"></i> Parse with Claude AI';
+    btn.innerHTML = '<i class="fa-solid fa-brain"></i> Parse with Gemini AI';
     btn.disabled = false;
 
     if (!res || !res.coreSkills) {
@@ -130,7 +130,7 @@ const JobsPage = {
     const allSkills = [...(res.coreSkills||[]), ...(res.niceToHaveSkills||[])].join(', ');
     document.body.insertAdjacentHTML('beforeend', C.modal('job-modal', 'Create Job Role (AI Pre-filled)', `
       <div style="background:var(--green-l);border-radius:var(--radius);padding:8px 12px;font-size:12px;color:var(--green);margin-bottom:12px">
-        ✓ Pre-filled by Claude AI — review and adjust before saving
+        ✓ Pre-filled by Gemini AI — review and adjust before saving
       </div>
       <div class="form-group">
         <label class="form-label">Job Title *</label>

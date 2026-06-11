@@ -19,14 +19,14 @@ public class AIResumeAnalysisServiceTest {
     private AIResumeAnalysisService service;
 
     @Mock
-    private ClaudeAIService claude;
+    private GeminiAIService gemini;
 
     private final ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        service = new AIResumeAnalysisService(claude);
+        service = new AIResumeAnalysisService(gemini);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class AIResumeAnalysisServiceTest {
             }
             """;
         JsonNode jsonNode = mapper.readTree(mockResponse);
-        when(claude.askJson(anyString(), anyString())).thenReturn(jsonNode);
+        when(gemini.askJson(anyString(), anyString())).thenReturn(jsonNode);
 
         Map<String, Object> profile = service.extractProfile("Jane Doe resume text");
 
@@ -80,7 +80,7 @@ public class AIResumeAnalysisServiceTest {
             }
             """;
         JsonNode jsonNode = mapper.readTree(mockResponse);
-        when(claude.askJson(anyString(), anyString())).thenReturn(jsonNode);
+        when(gemini.askJson(anyString(), anyString())).thenReturn(jsonNode);
 
         Map<String, Object> score = service.scoreAgainstJob(
                 "Jane Doe resume", "Java Developer", "Job Description", "Java, Docker", 3
@@ -109,7 +109,7 @@ public class AIResumeAnalysisServiceTest {
             }
             """;
         JsonNode jsonNode = mapper.readTree(mockResponse);
-        when(claude.askJson(anyString(), anyString())).thenReturn(jsonNode);
+        when(gemini.askJson(anyString(), anyString())).thenReturn(jsonNode);
 
         Map<String, Object> comparison = service.compareCandidates(
                 "r1 text", "Jane", "r2 text", "John", "Developer", "JD"

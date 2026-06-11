@@ -20,13 +20,13 @@ public class MatchingService {
 
     /**
      * AI-powered scoring of a resume against a job role.
-     * Claude evaluates semantic fit, not just keyword overlap.
+     * Gemini evaluates semantic fit, not just keyword overlap.
      */
     public CandidateScore scoreResumeAgainstJob(Resume resume, JobRole job) {
 
         log.info("AI scoring: {} against {}", resume.getCandidateName(), job.getTitle());
 
-        // Ask Claude to score this resume against the job
+        // Ask Gemini to score this resume against the job
         Map<String, Object> aiScore = aiService.scoreAgainstJob(
                 resume.getRawText(),
                 job.getTitle(),

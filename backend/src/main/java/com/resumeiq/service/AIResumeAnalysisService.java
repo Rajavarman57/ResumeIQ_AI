@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 /**
- * Uses Claude AI to perform deep resume analysis:
+ * Uses Gemini AI to perform deep resume analysis:
  *  - Extract structured candidate profile
  *  - Score and rank against a job description
  *  - Generate personalised skill gap report
@@ -20,7 +20,7 @@ import java.util.*;
 @Slf4j
 public class AIResumeAnalysisService {
 
-    private final ClaudeAIService claude;
+    private final GeminiAIService gemini;
 
     private static final String SYSTEM_PROFILE =
         "You are an expert recruitment AI. Your job is to read resume text and extract " +
@@ -68,7 +68,7 @@ public class AIResumeAnalysisService {
             }
             """.formatted(truncate(resumeText, 6000));
 
-        JsonNode result = claude.askJson(SYSTEM_PROFILE, prompt);
+        JsonNode result = gemini.askJson(SYSTEM_PROFILE, prompt);
         if (result == null) return fallbackProfile(resumeText);
 
         Map<String, Object> profile = new LinkedHashMap<>();
@@ -122,7 +122,7 @@ public class AIResumeAnalysisService {
             """.formatted(jobTitle, jobDescription, requiredSkills,
                          requiredExperience, truncate(resumeText, 5000));
 
-        JsonNode result = claude.askJson(SYSTEM_SCORING, prompt);
+        JsonNode result = gemini.askJson(SYSTEM_SCORING, prompt);
         if (result == null) return fallbackScore();
 
         Map<String, Object> score = new LinkedHashMap<>();
@@ -179,7 +179,7 @@ public class AIResumeAnalysisService {
             }
             """.formatted(jobTitle, truncate(resumeText, 3000), missingSkills, truncate(jobDescription, 500));
 
-        JsonNode result = claude.askJson(SYSTEM_SUGGESTIONS, prompt);
+        JsonNode result = gemini.askJson(SYSTEM_SUGGESTIONS, prompt);
         if (result == null) return fallbackSuggestions();
 
         Map<String, Object> suggestions = new LinkedHashMap<>();
@@ -222,7 +222,7 @@ public class AIResumeAnalysisService {
             Sort by fitScore descending. Include only jobs with fitScore >= 30.
             """.formatted(candidateSummary, jobList);
 
-        JsonNode result = claude.askJson(SYSTEM_SCORING, prompt);
+        JsonNode result = gemini.askJson(SYSTEM_SCORING, prompt);
         List<Map<String, Object>> roles = new ArrayList<>();
 
         if (result != null && result.isArray()) {
@@ -262,7 +262,7 @@ public class AIResumeAnalysisService {
             }
             """.formatted(truncate(jobDescriptionText, 3000));
 
-        JsonNode result = claude.askJson(SYSTEM_PROFILE, prompt);
+        JsonNode result = gemini.askJson(SYSTEM_PROFILE, prompt);
         if (result == null) return Map.of();
 
         Map<String, Object> parsed = new LinkedHashMap<>();
@@ -300,7 +300,7 @@ public class AIResumeAnalysisService {
         return list;
     }
 
-    // Fallbacks when Claude API is unavailable
+    // Fallbacks when Gemini API is unavailable
     private Map<String, Object> fallbackProfile(String text) {
         Map<String, Object> p = new LinkedHashMap<>();
         p.put("fullName", "Unknown Candidate");
@@ -382,7 +382,7 @@ public class AIResumeAnalysisService {
             }
             """.formatted(jobCtx, r1Name, truncate(r1Text, 4000), r2Name, truncate(r2Text, 4000));
 
-        JsonNode result = claude.askJson(SYSTEM_SCORING, prompt);
+        JsonNode result = gemini.askJson(SYSTEM_SCORING, prompt);
         if (result == null) return fallbackComparison(r1Name, r2Name);
 
         Map<String, Object> comparison = new LinkedHashMap<>();

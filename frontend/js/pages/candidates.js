@@ -51,7 +51,7 @@ const CandidatesPage = {
       <div id="candidates-grid" class="candidates-grid">${this.renderCards(candScores)}</div>`;
 
     app.innerHTML = C.layout('candidates', content,
-      `${candScores.length} candidate(s) · AI-scored by Claude`);
+      `${candScores.length} candidate(s) · AI-scored by Gemini`);
   },
 
   verdictColor(verdict) {
@@ -380,7 +380,7 @@ const CandidatesPage = {
     
     // Open comparison modal with loading state
     const modalId = 'compare-modal';
-    const loadingBody = `<div style="text-align:center;padding:60px 0;">${C.loading()}<p style="margin-top:16px;color:var(--gray-500)">Analyzing candidate profiles side-by-side using Claude AI...</p></div>`;
+    const loadingBody = `<div style="text-align:center;padding:60px 0;">${C.loading()}<p style="margin-top:16px;color:var(--gray-500)">Analyzing candidate profiles side-by-side using Gemini AI...</p></div>`;
     
     const overlay = document.createElement('div');
     overlay.id = `${modalId}-overlay`;
