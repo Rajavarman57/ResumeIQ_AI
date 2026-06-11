@@ -8,7 +8,7 @@ echo    Powered by Claude AI (Anthropic)
 echo  ============================================
 echo.
 
-:: Load from .env if it exists
+REM Load from .env if it exists
 if exist "%~dp0.env" (
   for /f "usebackq tokens=1,2 delims==" %%i in ("%~dp0.env") do (
     if "%%i"=="ANTHROPIC_API_KEY" set ANTHROPIC_API_KEY=%%j
