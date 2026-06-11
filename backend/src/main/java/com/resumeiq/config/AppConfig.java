@@ -15,7 +15,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AppConfig {
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -31,7 +35,7 @@ public class AppConfig {
     }
 
     @Bean
-    public CommandLineRunner seedData() {
+    public CommandLineRunner seedData(PasswordEncoder passwordEncoder) {
         return args -> {
             if (!userRepository.existsByEmail("admin@resumeiq.local")) {
                 userRepository.save(User.builder()
