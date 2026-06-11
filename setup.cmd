@@ -30,7 +30,7 @@ pause
 exit /b 1
 :java_ok
 
-node -version >nul 2>&1
+node -v >nul 2>&1
 if not errorlevel 1 goto node_ok
 echo [ERROR] Node.js not found. Install from nodejs.org
 pause
