@@ -8,12 +8,12 @@ echo    Powered by Claude AI (Anthropic)
 echo  ============================================
 echo.
 
-REM Load from .env if it exists
-if exist "%~dp0.env" (
-  for /f "tokens=2 delims==" %%A in ('findstr /i "ANTHROPIC_API_KEY" "%~dp0.env"') do (
-    set ANTHROPIC_API_KEY=%%A
-  )
+REM Load from .env if it exists (using goto to avoid block parsing bugs)
+if not exist "%~dp0.env" goto env_done
+for /f "tokens=2 delims==" %%A in ('findstr /i "ANTHROPIC_API_KEY" "%~dp0.env"') do (
+  set ANTHROPIC_API_KEY=%%A
 )
+:env_done
 
 if "%ANTHROPIC_API_KEY%"=="" (
   echo  [WARN] ANTHROPIC_API_KEY is not set in environment or .env file.
