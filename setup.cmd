@@ -8,8 +8,15 @@ echo    Powered by Claude AI (Anthropic)
 echo  ============================================
 echo.
 
+:: Load from .env if it exists
+if exist "%~dp0.env" (
+  for /f "usebackq tokens=1,2 delims==" %%i in ("%~dp0.env") do (
+    if "%%i"=="ANTHROPIC_API_KEY" set ANTHROPIC_API_KEY=%%j
+  )
+)
+
 if "%ANTHROPIC_API_KEY%"=="" (
-  echo  [WARN] ANTHROPIC_API_KEY is not set.
+  echo  [WARN] ANTHROPIC_API_KEY is not set in environment or .env file.
   echo  AI features will not work without it.
   echo  Get your key at: https://console.anthropic.com
   echo.
