@@ -8,25 +8,34 @@ echo    Powered by Claude AI (Anthropic)
 echo  ============================================
 echo.
 
-REM Load from .env if it exists (using goto to avoid block parsing bugs)
+REM Load from .env if it exists
 if not exist "%~dp0.env" goto env_done
 for /f "tokens=2 delims==" %%A in ('findstr /i "ANTHROPIC_API_KEY" "%~dp0.env"') do (
   set ANTHROPIC_API_KEY=%%A
 )
 :env_done
 
-if "%ANTHROPIC_API_KEY%"=="" (
-  echo  [WARN] ANTHROPIC_API_KEY is not set in environment or .env file.
-  echo  AI features will not work without it.
-  echo  Get your key at: https://console.anthropic.com
-  echo.
-  set /p ANTHROPIC_API_KEY=Enter your API key (or press Enter to skip): 
-)
+if not "%ANTHROPIC_API_KEY%"=="" goto key_done
+echo  [WARN] ANTHROPIC_API_KEY is not set in environment or .env file.
+echo  AI features will not work without it.
+echo  Get your key at: https://console.anthropic.com
+echo.
+set /p ANTHROPIC_API_KEY=Enter your API key (or press Enter to skip): 
+:key_done
 
 java -version >nul 2>&1
-if errorlevel 1 ( echo [ERROR] Java not found. Install Java 17+ & pause & exit /b 1 )
+if not errorlevel 1 goto java_ok
+echo [ERROR] Java not found. Install Java 17+
+pause
+exit /b 1
+:java_ok
+
 node --version >nul 2>&1
-if errorlevel 1 ( echo [ERROR] Node.js not found. Install from nodejs.org & pause & exit /b 1 )
+if not errorlevel 1 goto node_ok
+echo [ERROR] Node.js not found. Install from nodejs.org
+pause
+exit /b 1
+:node_ok
 
 echo  [OK] Prerequisites found
 echo.
